@@ -21,7 +21,7 @@ public interface ISymptomReader {
 	 * It also counts the number of unique symptoms found.
 	 *
 	 */
-	List<String> enumerateSymptoms(boolean verbose);
+	List<String> enumerateSymptoms(boolean display);
 
 	/**
 	 *
@@ -30,4 +30,11 @@ public interface ISymptomReader {
 	 * @return a Map of symptoms key associated with their count.
 	 */
 	Map<String,Integer> countSymptoms(boolean display, @NotNull List<String> pSymptomsList);
+
+	/**
+	 *
+	 * Count and write symptoms to a results.out file
+	 */
+	void writeSymptomsCountToFile();
+
 }
