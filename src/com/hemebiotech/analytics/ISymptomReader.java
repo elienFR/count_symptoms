@@ -1,8 +1,6 @@
 package com.hemebiotech.analytics;
 
-import org.jetbrains.annotations.NotNull;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Anything that will read symptom data from a source
@@ -14,27 +12,16 @@ import java.util.Map;
  */
 public interface ISymptomReader {
 	/**
-	 * If no data is available, return an empty List
-	 *
-	 * @return a raw listing of all Symptoms picked from a data
-	 * file without any duplicates.
-	 * It also counts the number of unique symptoms found.
-	 *
+	 * Extract each lines of a file in the element of an ArrayList<String>
+	 * @param verbose true activates verbose mode of the method
+	 * @param catchBlankLines true catch the file's blank lines
+	 * @param withoutDuplicates true create a list without duplicates.
+	 * @return a list of the string lines contained in a file
 	 */
-	List<String> enumerateSymptoms(boolean display);
+	List<String> extract(boolean verbose,boolean catchBlankLines,boolean withoutDuplicates);
 
-	/**
-	 *
-	 * @param display displays the counting at the end of the program
-	 * @param pSymptomsList is the list of symptoms that have to be counted
-	 * @return a Map of symptoms key associated with their count.
-	 */
-	Map<String,Integer> countSymptoms(boolean display, @NotNull List<String> pSymptomsList);
 
-	/**
-	 *
-	 * Count and write symptoms to a results.out file
-	 */
-	void writeSymptomsCountToFile();
+
+
 
 }
