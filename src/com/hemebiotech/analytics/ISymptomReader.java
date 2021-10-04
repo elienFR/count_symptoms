@@ -16,9 +16,12 @@ public interface ISymptomReader {
 	/**
 	 * If no data is available, return an empty List
 	 *
-	 * @return a raw listing of all Symptoms obtained from a data source, duplicates are possible/probable
+	 * @return a raw listing of all Symptoms picked from a data
+	 * file without any duplicates.
+	 * It also counts the number of unique symptoms found.
+	 *
 	 */
-	List<String> GetSymptoms ();
+	List<String> enumerateSymptoms(boolean verbose);
 
 	/**
 	 *

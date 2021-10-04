@@ -1,24 +1,20 @@
 package com.hemebiotech.analytics;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * Simple brute force implementation
- *
+ * Class that implements the interface ISymptoms reader and that defines methods to read
+ * and extract the symptoms of a file line by line.
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	private String filepath;
-	private Map<String,Integer> hashMapOfSymptomsAndCounts;
-
+	private List<String> symptomsEnumeration;
+	private Map<String,Integer> TreeMapOfSymptomsAndCounts;
 
 	/**
 	 *
@@ -29,27 +25,70 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	}
 
 	@Override
-	public List<String> GetSymptoms() {
-		ArrayList<String> result = new ArrayList<String>();
+	public List<String> enumerateSymptoms(boolean verboseMode) {
 
-		if (filepath != null) {
+		System.out.println("Starting enumerating Symptoms...");
+
+		this.symptomsEnumeration = new ArrayList<String>();
+
+		if (this.filepath != null) {
 			try {
+				boolean alreadyExists = false;		//Is the current line already exists in this.symptomsEnumeration
+				boolean firstInjection = true;		//Used to increment the this.symptomsEnumeration array list for the first time
+
 				BufferedReader reader = new BufferedReader (new FileReader(filepath));
 				String line = reader.readLine();
 
 				while (line != null) {
-					result.add(line);
+					//This part deals with empty lines to prevent them from being treated
+					if (!line.equals("")) {
+						if(firstInjection) {
+							this.symptomsEnumeration.add(line);
+							firstInjection = false;
+						}
+
+						else {
+							for (int i = 0; i < this.symptomsEnumeration.size(); i++) {
+								if (line.equals(this.symptomsEnumeration.get(i))) {
+									alreadyExists = true;
+									break;
+								}
+
+								else {
+									alreadyExists = false;
+								}
+							}
+
+							if (!alreadyExists){
+								this.symptomsEnumeration.add(line);
+							}
+						}
+					}
+
 					line = reader.readLine();
 				}
+
 				reader.close();
+				System.out.println("Enumeration ended successfully.");
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
-		return result;
-	}
+		if(verboseMode) {
+			System.out.println("Here is the list of unique symptoms extracted from the file !");
+			for(int i=0; i<this.symptomsEnumeration.size();i++){
+				System.out.println(i + " : " + this.symptomsEnumeration.get(i));
+			}
+			System.out.println("There are " + this.symptomsEnumeration.size() + " different symptoms in total.");
+		}
 
+		//we sort the symptoms in the ArrayList
+		Collections.sort(this.symptomsEnumeration);
+
+		return this.symptomsEnumeration;
+	}
 
 	/**
 	 *
@@ -63,7 +102,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	 */
 	@Override
 	public Map<String,Integer> countSymptoms(boolean display, @NotNull List<String> pSymptomsList) {
-		this.hashMapOfSymptomsAndCounts = new HashMap<String, Integer>();
+		this.TreeMapOfSymptomsAndCounts = new TreeMap<String, Integer>();
 
 		System.out.println("Starting counting symptoms...");
 
@@ -71,9 +110,9 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 			BufferedReader reader = new BufferedReader (new FileReader(this.filepath));
 			String line = reader.readLine();
 
-			//Init of the HashMap
+			//Init of the TreeMap
 			for(int i = 0; i < pSymptomsList.size(); i++){
-				this.hashMapOfSymptomsAndCounts.put(pSymptomsList.get(i), 0);
+				this.TreeMapOfSymptomsAndCounts.put(pSymptomsList.get(i), 0);
 			}
 
 			//We read every line of the fill until it reaches the end
@@ -81,7 +120,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				//We check if the line's not empty so we do not overprocess the file
 				if(!line.equals("")) {
 					if(pSymptomsList.contains(line)) {
-						this.hashMapOfSymptomsAndCounts.put(line, this.hashMapOfSymptomsAndCounts.get(line) + 1);
+						this.TreeMapOfSymptomsAndCounts.put(line, this.TreeMapOfSymptomsAndCounts.get(line) + 1);
 					}
 				}
 				line = reader.readLine();
@@ -97,7 +136,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				System.out.println("||----------------------------||");
 				for (int i = 0; i < pSymptomsList.size(); i++) {
 					if (!pSymptomsList.get(i).equals("")) {
-						System.out.println("||   " + pSymptomsList.get(i) + "   |   " + this.hashMapOfSymptomsAndCounts.get(pSymptomsList.get(i)));
+						System.out.println("||   " + pSymptomsList.get(i) + "   |   " + this.TreeMapOfSymptomsAndCounts.get(pSymptomsList.get(i)));
 					}
 				}
 				System.out.println("================================");
@@ -109,7 +148,6 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 			System.out.println("==========================================================\n");
 			e.printStackTrace();	}
 
-
-		return	this.hashMapOfSymptomsAndCounts;
+		return	this.TreeMapOfSymptomsAndCounts;
 	}
 }
