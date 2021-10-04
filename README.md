@@ -1,1 +1,1 @@
-Sample project for OpenClassroom's fundamentals of Java
+Release 1.0.0 for OpenClassrooms' counting symptoms project.
