@@ -1,6 +1,8 @@
 package com.hemebiotech.analytics;
 
+import org.jetbrains.annotations.NotNull;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Anything that will read symptom data from a source
@@ -14,10 +16,15 @@ public interface ISymptomReader {
 	/**
 	 * If no data is available, return an empty List
 	 *
-	 * @return a raw listing of all Symptoms unically picked from a data  file
-	 * withoput any duplicates.
-	 * It also count the number of unique symptoms found.
-	 *
+	 * @return a raw listing of all Symptoms obtained from a data source, duplicates are possible/probable
 	 */
-	List<String> enumerateSymptoms(boolean verbose);
+	List<String> GetSymptoms ();
+
+	/**
+	 *
+	 * @param display displays the counting at the end of the program
+	 * @param pSymptomsList is the list of symptoms that have to be counted
+	 * @return a Map of symptoms key associated with their count.
+	 */
+	Map<String,Integer> countSymptoms(boolean display, @NotNull List<String> pSymptomsList);
 }
