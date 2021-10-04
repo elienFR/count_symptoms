@@ -1,7 +1,6 @@
 package com.hemebiotech.analytics;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import java.util.List;
 public class ExtractLinesFromFile implements ISymptomReader {
 
 	private String filepath;
-	private List<String> symptomsList;
+	private List<String> extractedList;
 
 	/**
 	 * Class' constructor
@@ -23,7 +22,7 @@ public class ExtractLinesFromFile implements ISymptomReader {
 	 */
 	public ExtractLinesFromFile(){
 		this.filepath = "file.txt";
-		this.symptomsList = new ArrayList<>();
+		this.extractedList = new ArrayList<>();
 	}
 
 	/**
@@ -32,7 +31,7 @@ public class ExtractLinesFromFile implements ISymptomReader {
 	 */
 	public ExtractLinesFromFile(String filepath) {
 		this.filepath = filepath;
-		this.symptomsList = new ArrayList<>();
+		this.extractedList = new ArrayList<>();
 	}
 
 	/**
@@ -42,7 +41,7 @@ public class ExtractLinesFromFile implements ISymptomReader {
 	 * @param withoutDuplicates true create a list without duplicates.
 	 * @return a list of the string lines contained in a file
 	 */
-	public List<String> extract(boolean verbose, boolean catchBlankLines, boolean withoutDuplicates){
+	public List<String> extract(boolean verbose, boolean catchBlankLines, boolean withoutDuplicates, boolean sort){
 
 		if(verbose){
 			System.out.println("\nStarting extracting lines from file located in :\n");
@@ -57,12 +56,12 @@ public class ExtractLinesFromFile implements ISymptomReader {
 			//Running through the entire file
 			while (line!=null) {
 				//Check if the line already exists in list
-				if(!this.symptomsList.contains(line) || !withoutDuplicates) {
+				if(!this.extractedList.contains(line) || !withoutDuplicates) {
 					//Do we catch blank lines ?
 					if (line.equals("") && catchBlankLines) {
-						this.symptomsList.add(line);
+						this.extractedList.add(line);
 					} else if (!line.equals("")) {
-						this.symptomsList.add(line);
+						this.extractedList.add(line);
 					}
 				}
 
@@ -78,7 +77,12 @@ public class ExtractLinesFromFile implements ISymptomReader {
 			System.out.println("Please see details below  :\n");
 			e.printStackTrace();
 		}
-		return this.symptomsList;
+
+		if(sort){
+			this.sortData();
+		}
+
+		return this.extractedList;
 	}
 
 
@@ -87,7 +91,7 @@ public class ExtractLinesFromFile implements ISymptomReader {
 	 */
 	public void sortData(){
 		try{
-			Collections.sort(this.symptomsList);
+			Collections.sort(this.extractedList);
 		} catch (NullPointerException e){
 			System.out.println("\n!!! The given list to sort is Null !!!\n");
 		}

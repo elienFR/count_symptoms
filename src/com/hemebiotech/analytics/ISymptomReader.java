@@ -18,7 +18,7 @@ public interface ISymptomReader {
 	 * @param withoutDuplicates true create a list without duplicates.
 	 * @return a list of the string lines contained in a file
 	 */
-	List<String> extract(boolean verbose,boolean catchBlankLines,boolean withoutDuplicates);
+	List<String> extract(boolean verbose,boolean catchBlankLines,boolean withoutDuplicates,boolean sort);
 
 
 

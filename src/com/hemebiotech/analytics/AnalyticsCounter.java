@@ -20,7 +20,7 @@ public class AnalyticsCounter {
 		this.symptomsList = new ExtractLinesFromFile(this.sourceFilePath);
 		this.symptomCounter = new CountDataFromFile
 				(this.sourceFilePath,this.symptomsList.extract
-						(false,false,true));
+						(false,false,true,true));
 		this.symptomWriter = new WriteMapStringIntegerToFile(this.symptomCounter.count());
 		symptomWriter.writeToFile(this.outFilePath);
 	}
