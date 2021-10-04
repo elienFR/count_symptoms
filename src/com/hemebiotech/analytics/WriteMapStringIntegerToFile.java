@@ -4,6 +4,11 @@ import java.io.FileWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Create an object that will write the content of a map into a file
+ * @author Elien
+ * @version 0.2.0
+ */
 public class WriteMapStringIntegerToFile implements ISymptomWriter {
     private String outputFilePath;
     private Map<String, Integer> mapToBeWritten;
@@ -18,10 +23,11 @@ public class WriteMapStringIntegerToFile implements ISymptomWriter {
     /**
      * Constructor with specific map
      * @param pMap is the Map to be written to file later
-     *
+     * @param pOutputFilePath the output file path
      */
-    public WriteMapStringIntegerToFile(Map<String, Integer> pMap){
+    public WriteMapStringIntegerToFile(Map<String, Integer> pMap, String pOutputFilePath){
         this.mapToBeWritten = pMap;
+        this.outputFilePath = pOutputFilePath;
     }
 
 
@@ -29,8 +35,8 @@ public class WriteMapStringIntegerToFile implements ISymptomWriter {
      * Methods that writes the content of mapToBeWritten
      * in the root folder to a file called result.out
      */
-    public void writeToFile(){
-        this.writeToFile("results.out");
+    public void writeSymptomsFile(){
+        this.writeToFile(this.outputFilePath);
     }
 
     /**

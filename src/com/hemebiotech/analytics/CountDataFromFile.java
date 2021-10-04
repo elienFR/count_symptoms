@@ -1,30 +1,40 @@
 package com.hemebiotech.analytics;
 
-import java.awt.desktop.SystemSleepEvent;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Creates an object that contains a text source file, a list of its unique distinguished lines, and a Map of these lines and their number occurrences in the source file.
+ */
 public class CountDataFromFile implements ISymptomCounter{
 
+    /**
+     * is the source file path.
+     */
     private String filepath;
+    /**
+     * is the list of each unique lines found in source file.
+     */
     private List<String> listToCountInFile;
+    /**
+     * is a Map with each unique line keys and how many times they are found in text file as key value.
+     */
     private Map<String, Integer> mapOfCount;
 
     /**
-     * Constructor that instantiates its mapOfCount, and its default blank ArrayList<String> and filepath "file.txt"
+     * Instantiates a blank TreeMap, and its default blank ArrayList, filepath "file.txt"
      */
     public CountDataFromFile(){
         this.filepath = "file.txt";
-        this.listToCountInFile = new ArrayList<String>();
+        this.listToCountInFile = new ArrayList<>();
         this.mapOfCount = new TreeMap<>();
     }
 
     /**
      * Constructor that instantiates a CountDataFromFile Object
-     * with a blank HashMap<String, Integer> as it mapOfCount
+     * with a blank TreeMap a specified source file and a specified list of lines which are to be counted in this file.
      * @param pFilePath is the relative filepath of the file to be read and counted
      * @param pList is a list of String compared to each line in the file you want to count. If lines and String in the list are the same then it will be counted in the map with count() method.
      */
@@ -34,17 +44,18 @@ public class CountDataFromFile implements ISymptomCounter{
         this.mapOfCount = new TreeMap<>();
     }
 
+
     /**
-     * A method that will count number of line of the same occurrence.
+     * A method that will count number of symptom lines of the same occurrence.
      * @return a map containing each line as a key and its associated integer number as the count.
      */
-    @Override
-    public Map<String, Integer> count(){
+    public Map<String, Integer> countSymptoms(){
         return this.count(false);
     }
+
     /**
      * A method that will count number of line of the same occurrence.
-     * @param verbose true enables the bermose mode of the method.
+     * @param verbose true enables the verbose mode.
      * @return a map containing each line as a key and its associated integer number as the count.
      */
     public Map<String, Integer> count(boolean verbose){
@@ -99,7 +110,4 @@ public class CountDataFromFile implements ISymptomCounter{
         System.out.println("\nThere are " + this.mapOfCount.keySet().toArray().length + " different symptoms in total.");
     }
 
-    void checkDuplicates(){
-        System.out.println("\nBe careful your list contains duplicates\n");
-    }
 }

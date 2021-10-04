@@ -1,8 +1,17 @@
-package com.hemebiotech.analytics;
+import com.hemebiotech.analytics.AnalyticsCounter;
 
 import java.util.*;
 
+/**
+ * A class only used a main program to run tests
+ * @author Elien
+ * @version 0.1.0
+ */
 public class TestClass {
+    /**
+     * the main entry of the test class
+     * @param args nothing to say
+     */
     public static void main(String[] args) {
 /*
         //--------------------------------------------------------------------------------------
@@ -30,8 +39,8 @@ public class TestClass {
 //        System.out.println("\ndebugging...");
 //        System.out.println();
 
-        fichier.writeToFile("test/write_test.out");
-        sortedFichier.writeToFile("test/write_sortedTest.out");
+        fichier.writeToFile("rscTest/write_test.out");
+        sortedFichier.writeToFile("rscTest/write_sortedTest.out");
 
 //        System.out.println("\ndebugging...");
 //        System.out.println();
@@ -53,14 +62,14 @@ public class TestClass {
 //        System.out.println("\ndebugging...");
 //        System.out.println();
 
-        ISymptomCounter symptomCounter = new CountDataFromFile("test/symptoms_test.txt",stringList);
+        ISymptomCounter symptomCounter = new CountDataFromFile("rscTest/symptoms_test.txt",stringList);
         symptomCounter.count();
         symptomCounter.show();
 
 //        System.out.println("\ndebugging...");
 //        System.out.println();
 
-        ExtractLinesFromFile symptomReader = new ExtractLinesFromFile("test/symptoms_test.txt");
+        ExtractLinesFromFile symptomReader = new ExtractLinesFromFile("rscTest/symptoms_test.txt");
         symptomReader.extract(true, false, true);
 
 //        System.out.println("\ndebugging...");
@@ -68,7 +77,7 @@ public class TestClass {
 
 */
 
-        AnalyticsCounter analyticsCounter1 = new AnalyticsCounter("test/symptoms_test.txt", "test/analitycsCounter1_test.out");
+        AnalyticsCounter analyticsCounter1 = new AnalyticsCounter("rscTest/symptoms_test.txt", "rscTest/analitycsCounter1_test.out");
         analyticsCounter1.execute();
 //        System.out.println("\ndebugging...");
 //        System.out.println();
