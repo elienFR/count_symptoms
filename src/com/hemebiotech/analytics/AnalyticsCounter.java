@@ -1,17 +1,27 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.nio.file.FileAlreadyExistsException;
 
 public class AnalyticsCounter {
-	public static void main(String args[]) throws Exception {
-		//Name of the file you want to pick or complete path to it
-		String filepath = "symptoms.txt";
 
-		//Beginning of the program to write a file with every symptom's count.
-		ISymptomReader symptomsFile = new ReadSymptomDataFromFile(filepath);
-		symptomsFile.writeSymptomsCountToFile();
+	private ISymptomReader symptomsList;
+	private ISymptomCounter symptomCounter;
+	private ISymptomWriter symptomWriter;
+	private String sourceFilePath;
+	private String outFilePath;
 
+	public AnalyticsCounter(String sourceFilePath, String outFilePath){
+		this.sourceFilePath=sourceFilePath;
+		this.outFilePath=outFilePath;
+	}
+
+	public void execute(){
+		this.symptomsList = new ExtractLinesFromFile(this.sourceFilePath);
+		this.symptomCounter = new CountDataFromFile
+				(this.sourceFilePath,this.symptomsList.extract
+						(false,false,true,true));
+		this.symptomWriter = new WriteMapStringIntegerToFile(this.symptomCounter.count());
+		symptomWriter.writeToFile(this.outFilePath);
 	}
 }

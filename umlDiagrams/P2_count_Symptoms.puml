@@ -1,0 +1,60 @@
+@startuml
+
+interface ISymptomReader {
+    getSymptoms() : List<String>
+    show() : void
+}
+
+interface ISymptomCounter {
+    count() : Map<String,Integer>
+    show() : void
+}
+
+interface ISymptomWriter {
+    writeToFile() : void;
+    show() : void;
+}
+
+class AnalyticsCounter{
+   symptomsList : ISymptomReader
+   symptomsCount : ISymptomCounter
+   symptomsOutputFile : ISymptomWriter
+   main()
+}
+
+class ExtractLinesFromFile  {
+    filepath : String
+    symptomsEnumeration : List<String>
+    extract() : List<String>
+    extractWithoutDuplicate() : List<String>
+    getSymptoms() : List<String>
+    sortData() : void
+    show() : void
+}
+
+ISymptomReader <.. ExtractLinesFromFile
+
+class CountDataFromFile{
+    filepath : String
+    mapOfCount : Map<String,Integer>
+    checkIfDuplicates() : boolean
+    count() : Map<String,Integer>
+    show() : void
+}
+
+ISymptomCounter <.. CountDataFromFile
+
+class WriteMapToFile {
+    outputFilepath : String
+    writeToFile() : void
+}
+
+ISymptomWriter <.. WriteMapToFile
+
+AnalyticsCounter --> ISymptomReader
+AnalyticsCounter --> ISymptomCounter
+AnalyticsCounter --> ISymptomWriter
+
+
+
+@enduml

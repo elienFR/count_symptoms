@@ -1,0 +1,5 @@
+v2.0.0 :
+- Changed architecture : switched to multiple interfaces rather than a unique one.
+
+v1.0.0 :
+- First release.
