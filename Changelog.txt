@@ -1,3 +1,7 @@
+v2.0.2 :
+- Changed "for loop" with "enhanced for"
+- added "finally" statement in "try", to close buffer even in case of exception throwing
+
 v2.0.1 :
 - Added JavaDoc
 - Some changes were made in the UML diagram to fit with the latest program's architecture.
