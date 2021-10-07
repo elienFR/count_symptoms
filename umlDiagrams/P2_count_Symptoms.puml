@@ -1,35 +1,38 @@
 @startuml
 
+abstract class Main{
+main() : void
+}
+
+Main --> AnalyticsCounter
+
 interface ISymptomReader {
-    getSymptoms() : List<String>
-    show() : void
+    extractSymptoms() : List<String>
 }
 
 interface ISymptomCounter {
-    count() : Map<String,Integer>
-    show() : void
+    countSymptoms() : Map<String,Integer>d
 }
 
 interface ISymptomWriter {
-    writeToFile() : void;
-    show() : void;
+    writeSymptomsFile() : void
 }
 
 class AnalyticsCounter{
    symptomsList : ISymptomReader
    symptomsCount : ISymptomCounter
    symptomsOutputFile : ISymptomWriter
-   main()
+   sourceFilePath : String
+   outFilePath : String
+   execute() : void
 }
 
 class ExtractLinesFromFile  {
     filepath : String
-    symptomsEnumeration : List<String>
+    extractedList : List<String>
     extract() : List<String>
-    extractWithoutDuplicate() : List<String>
-    getSymptoms() : List<String>
     sortData() : void
-    show() : void
+    extractSymptoms() : List<String>
 }
 
 ISymptomReader <.. ExtractLinesFromFile
@@ -37,19 +40,20 @@ ISymptomReader <.. ExtractLinesFromFile
 class CountDataFromFile{
     filepath : String
     mapOfCount : Map<String,Integer>
-    checkIfDuplicates() : boolean
     count() : Map<String,Integer>
+    countSymptoms() : Map<String,Integer>
     show() : void
 }
 
 ISymptomCounter <.. CountDataFromFile
 
-class WriteMapToFile {
+class WriteMapStringIntegerToFile {
     outputFilepath : String
     writeToFile() : void
+    writeSymptomsFile() : void
 }
 
-ISymptomWriter <.. WriteMapToFile
+ISymptomWriter <.. WriteMapStringIntegerToFile
 
 AnalyticsCounter --> ISymptomReader
 AnalyticsCounter --> ISymptomCounter

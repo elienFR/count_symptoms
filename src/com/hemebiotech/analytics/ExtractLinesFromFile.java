@@ -10,6 +10,8 @@ import java.util.List;
 /**
  * Class that implements the interface ISymptoms reader and that defines methods to read
  * and extract the symptoms of a file line by line.
+ * @author Elien
+ * @version 0.2.0
  */
 public class ExtractLinesFromFile implements ISymptomReader {
 
@@ -35,10 +37,11 @@ public class ExtractLinesFromFile implements ISymptomReader {
 	}
 
 	/**
-	 * Extract each lines of a file in the element of an ArrayList<String>
+	 * Extract each lines of a file in the element of an ArrayList
 	 * @param verbose true activates verbose mode of the method
 	 * @param catchBlankLines true catch the file's blank lines
 	 * @param withoutDuplicates true create a list without duplicates.
+	 * @param sort true will sort the list from a to z.
 	 * @return a list of the string lines contained in a file
 	 */
 	public List<String> extract(boolean verbose, boolean catchBlankLines, boolean withoutDuplicates, boolean sort){
@@ -96,5 +99,14 @@ public class ExtractLinesFromFile implements ISymptomReader {
 			System.out.println("\n!!! The given list to sort is Null !!!\n");
 		}
 
+	}
+
+	/**
+	 * Lists every symptom a text file without blank lines and without duplicates.
+	 * A connection with the interface ISymptomReader
+	 * @see ISymptomReader
+	 */
+	public List<String> extractSymptoms(){
+		return this.extract(false, false, true, true);
 	}
 }
