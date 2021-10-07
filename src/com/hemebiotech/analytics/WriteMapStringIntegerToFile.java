@@ -1,6 +1,7 @@
 package com.hemebiotech.analytics;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,8 +46,9 @@ public class WriteMapStringIntegerToFile implements ISymptomWriter {
      * @param pFilePath is the name of the output file create
      */
     public void writeToFile(String pFilePath){
+        FileWriter writer = null;
         try{
-            FileWriter writer = new FileWriter (pFilePath);
+            writer = new FileWriter (pFilePath);
 
             System.out.println("\nStart writing file...");
 
@@ -65,6 +67,15 @@ public class WriteMapStringIntegerToFile implements ISymptomWriter {
             System.out.println("An error occurred during file writing.");
             System.out.println("See error below :\n");
             e.printStackTrace();
+        }
+
+        //Force to close the writer buffer
+        finally {
+            try {
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

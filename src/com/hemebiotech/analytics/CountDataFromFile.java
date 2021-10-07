@@ -62,13 +62,14 @@ public class CountDataFromFile implements ISymptomCounter{
         if(verbose){System.out.println("\nStarting counting symptoms...");}
 
         //Init keys of the map and associates 0 as value.
-        for(int i = 0; i < this.listToCountInFile.size(); i++){
-            this.mapOfCount.put(listToCountInFile.get(i), 0);
+        for(String element : this.listToCountInFile){
+            this.mapOfCount.put(element, 0);
         }
 
+        BufferedReader reader = null;
         try{
             //Creation of a buffer "line" that will run through each line of the counted file.
-            BufferedReader reader = new BufferedReader (new FileReader(this.filepath));
+            reader = new BufferedReader (new FileReader(this.filepath));
             String line = reader.readLine();
 
             //Read every line of the file until it reaches the end
@@ -95,6 +96,15 @@ public class CountDataFromFile implements ISymptomCounter{
             System.out.println(this.filepath + " : No such file or directory !");
             System.out.println("Please see details below  :\n");
             e.printStackTrace();
+        }
+
+        //Force to close the reader buffer even in case of error throwing
+        finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 

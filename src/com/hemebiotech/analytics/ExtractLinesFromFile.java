@@ -51,9 +51,10 @@ public class ExtractLinesFromFile implements ISymptomReader {
 			System.out.println(filepath);
 		}
 
+		BufferedReader reader = null;
 		try{
 			//Creation of a buffer "line" that will run through each line the file.
-			BufferedReader reader = new BufferedReader (new FileReader(filepath));
+			reader = new BufferedReader (new FileReader(filepath));
 			String line = reader.readLine();
 
 			//Running through the entire file
@@ -79,6 +80,15 @@ public class ExtractLinesFromFile implements ISymptomReader {
 			System.out.println(this.filepath + " : No such file or directory !");
 			System.out.println("Please see details below  :\n");
 			e.printStackTrace();
+		}
+
+		//Force to close the reader buffer even in case of error throwing
+		finally{
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		if(sort){
